@@ -12,7 +12,7 @@
     </properties>
     <scm>
         <developerConnection>
-            scm:git:https://github.com/hilel14/filedeck
+            scm:git:https://github.com/hilel14/filedeck-de
         </developerConnection>
     </scm>
     <build>
