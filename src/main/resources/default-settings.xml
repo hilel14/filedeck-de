@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>default settings for filedeck desktop application</comment>
+    <entry key="db.driver">org.mariadb.jdbc.Driver</entry>
+    <entry key="db.url">jdbc:mysql://localhost/filedeck?useUnicode=true&amp;characterEncoding=utf8</entry>
+    <entry key="db.user">grafika</entry>
+    <entry key="db.password">12345678</entry>
+    <entry key="paths.root">/var/opt/filedeck/root</entry>
+    <entry key="paths.evo">/var/opt/filedeck/evo</entry>
+    <entry key="litmus.configuration">https://www.youtube.com/watch?v=lHDMn_ogRHU</entry>
+</properties>
