@@ -32,6 +32,7 @@ public class Config {
     public Path mastersFolder;
     public BasicDataSource dataSource;
     public String appVersion = "unknown";
+    public String graphicsFiles;
     public String litmusConfiguration;
 
     public static Config getInstance() {
@@ -53,6 +54,8 @@ public class Config {
         qaFolder = rootFolder.resolve("QA");
         mastersFolder = rootFolder.resolve("Masters");
         evoFolder = Paths.get(props.getProperty("paths.evo"));
+        // SET graphics pattern
+        graphicsFiles = props.getProperty("graphics.files");
         // create data source
         createDataSource(props);
         // get app version

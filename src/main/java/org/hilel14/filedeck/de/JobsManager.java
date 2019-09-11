@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class JobsManager {
 
     public static final Logger LOGGER = Logger.getLogger(JobsManager.class.getName());
-    public final String designPattern = "*.{indd,ai,psd}";
     DataTool dataTool;
 
     public JobsManager() {
@@ -32,26 +31,41 @@ public class JobsManager {
     public void createJob(Job job) throws IOException, SQLException {
         // add job to database
         dataTool.createJob(job.getPaperCode(), job.getUserName());
-        // create basic folder structure
+        // create empty directory layout for main job and envelopes
         Path jobFolder = findJobFolder(job.getPaperCode(), "dev");
-        Files.createDirectories(jobFolder);
-        Files.createDirectory(jobFolder.resolve("inbox"));
-        Files.createDirectory(jobFolder.resolve("outbox"));
-        Files.createDirectory(jobFolder.resolve("press"));
-        // copy files from base job
+        createDirectoryLayout(jobFolder);
+        for (String envelope : job.getEnvelopes()) {
+            Path envelopeFolder = jobFolder.resolve("envelopes").resolve(envelope);
+            createDirectoryLayout(envelopeFolder);
+        }
+        // copy files from base job to main job and envelopes
         if (job.getBaseJob() != null) {
-            Path sourceFolder = findJobFolder(job.getBaseJob(), "masters")
-                    .resolve(job.getBaseVersion());
-            // copy design files
-            try (DirectoryStream<Path> stream
-                    = Files.newDirectoryStream(sourceFolder, designPattern)) {
-                for (Path source : stream) {
-                    String fileName
-                            = source.getFileName().toString().replace(job.getBaseJob(), job.getPaperCode());
-                    Files.copy(source, jobFolder.resolve(fileName));
+            Path baseJobFolder = findJobFolder(job.getBaseJob(), "masters").resolve(job.getBaseVersion());
+            copyFromBase(baseJobFolder, job.getBaseJob(), jobFolder, job.getPaperCode());
+            for (String envelope : job.getEnvelopes()) {
+                Path baseEnvelopeFolder = baseJobFolder.resolve("envelopes").resolve(envelope);
+                if (Files.exists(baseEnvelopeFolder)) {
+                    Path envelopeFolder = jobFolder.resolve("envelopes").resolve(envelope);
+                    copyFromBase(baseEnvelopeFolder, job.getBaseJob(), envelopeFolder, job.getPaperCode());
                 }
             }
         }
+    }
+
+    private void copyFromBase(Path sourceFolder, String sourceName, Path targetFolder, String targetName) throws IOException {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(sourceFolder, Config.getInstance().graphicsFiles)) {
+            for (Path source : stream) {
+                String fileName = source.getFileName().toString().replace(sourceName, targetName);
+                Files.copy(source, targetFolder.resolve(fileName));
+            }
+        }
+    }
+
+    private void createDirectoryLayout(Path root) throws IOException {
+        Files.createDirectories(root);
+        Files.createDirectory(root.resolve("inbox"));
+        Files.createDirectory(root.resolve("outbox"));
+        Files.createDirectory(root.resolve("press"));
     }
 
     public void moveJobToQa(String paperCode) throws IOException, SQLException {

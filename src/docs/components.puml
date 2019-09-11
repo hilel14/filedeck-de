@@ -1,0 +1,16 @@
+@startuml
+
+actor "Designer" as designer
+actor "QA Manager" as qa
+component [FileDeck dektop application] as app
+component [Root folder \n (Masters, Dev, QA)] as root
+component [Evo server] as evo
+component [MSSQL database] as db
+
+designer --> app
+qa --> app
+app --> root
+app --> evo
+app --> db
+
+@enduml

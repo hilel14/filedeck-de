@@ -9,4 +9,5 @@
     <entry key="paths.root">/var/opt/filedeck/root</entry>
     <entry key="paths.evo">/var/opt/filedeck/evo</entry>
     <entry key="litmus.configuration">https://www.youtube.com/watch?v=lHDMn_ogRHU</entry>
+    <entry key="graphics.files">*.{indd,ai,psd}</entry>
 </properties>

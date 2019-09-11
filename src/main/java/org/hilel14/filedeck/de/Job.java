@@ -1,5 +1,8 @@
 package org.hilel14.filedeck.de;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author hilel14
@@ -10,6 +13,7 @@ public class Job {
     private String paperCode;
     private String baseJob;
     private String baseVersion;
+    private final List<String> envelopes = new ArrayList<>();
 
     /**
      * @return the userName
@@ -65,6 +69,13 @@ public class Job {
      */
     public void setBaseVersion(String baseVersion) {
         this.baseVersion = baseVersion;
+    }
+
+    /**
+     * @return the envelopes
+     */
+    public List<String> getEnvelopes() {
+        return envelopes;
     }
 
 }
