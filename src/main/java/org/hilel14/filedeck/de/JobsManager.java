@@ -22,10 +22,12 @@ import java.util.logging.Logger;
 public class JobsManager {
 
     public static final Logger LOGGER = Logger.getLogger(JobsManager.class.getName());
+    Config config;
     DataTool dataTool;
 
-    public JobsManager() {
-        this.dataTool = new DataTool();
+    public JobsManager(Config config) {
+        this.config = config;
+        this.dataTool = new DataTool(config.getDataSource());
     }
 
     public void createJob(Job job) throws IOException, SQLException {
@@ -53,7 +55,7 @@ public class JobsManager {
     }
 
     private void copyFromBase(Path sourceFolder, String sourceName, Path targetFolder, String targetName) throws IOException {
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(sourceFolder, Config.getInstance().graphicsFiles)) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(sourceFolder, config.getGraphicsFiles())) {
             for (Path source : stream) {
                 String fileName = source.getFileName().toString().replace(sourceName, targetName);
                 Files.copy(source, targetFolder.resolve(fileName));
@@ -94,7 +96,7 @@ public class JobsManager {
 
     public void copyToEvo(String paperCode) throws IOException {
         Path sourceFolder = findJobFolder(paperCode, "qa").resolve("press");
-        Path targetFolder = Config.getInstance().evoFolder.resolve(paperCode);
+        Path targetFolder = config.getEvoFolder().resolve(paperCode);
         Files.createDirectories(targetFolder);
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(sourceFolder)) {
             for (Path source : stream) {
@@ -142,13 +144,13 @@ public class JobsManager {
         Path base;
         switch (jobStatus) {
             case "dev":
-                base = Config.getInstance().devFolder;
+                base = config.getDevFolder();
                 break;
             case "qa":
-                base = Config.getInstance().qaFolder;
+                base = config.getQaFolder();
                 break;
             case "masters":
-                base = Config.getInstance().mastersFolder;
+                base = config.getMastersFolder();
                 break;
             default:
                 LOGGER.log(Level.WARNING, "{0} is not a valid job status code", jobStatus);

@@ -16,15 +16,17 @@ public class SettingsDialog extends javax.swing.JDialog {
 
     public static final Logger LOGGER = Logger.getLogger(SettingsDialog.class.getName());
     static Preferences preferences = Preferences.userNodeForPackage(SettingsDialog.class);
+    final Config config;
 
     /**
      * Creates new form SettingsDialog
      *
      * @param parent
-     * @param modal
+     * @param config
      */
-    public SettingsDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public SettingsDialog(java.awt.Frame parent, Config config) {
+        super(parent, true);
+        this.config = config;
         initComponents();
         loadPreferences();
         showSettings();
@@ -48,10 +50,9 @@ public class SettingsDialog extends javax.swing.JDialog {
     }
 
     private void showSettings() {
-        appVersionTextField.setText(Config.getInstance().appVersion);
-        appDataTextField.setText(Config.getInstance().appDataFolder.toString());
-        rootFolderTextField.setText(Config.getInstance().rootFolder.toString());
-        evoJobsTextField.setText(Config.getInstance().evoFolder.toString());
+        appVersionTextField.setText(config.getAppVersion());
+        rootFolderTextField.setText(config.getRootFolder().toString());
+        evoJobsTextField.setText(config.getEvoFolder().toString());
     }
 
     /**
@@ -67,8 +68,6 @@ public class SettingsDialog extends javax.swing.JDialog {
         contentPanel = new javax.swing.JPanel();
         appVersionLabel = new javax.swing.JLabel();
         appVersionTextField = new javax.swing.JTextField();
-        appDataLabel = new javax.swing.JLabel();
-        appDataTextField = new javax.swing.JTextField();
         rootFolderLabel = new javax.swing.JLabel();
         rootFolderTextField = new javax.swing.JTextField();
         evoJobsLabel = new javax.swing.JLabel();
@@ -99,19 +98,6 @@ public class SettingsDialog extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.1;
         contentPanel.add(appVersionTextField, gridBagConstraints);
-
-        appDataLabel.setText("Application data folder");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-        contentPanel.add(appDataLabel, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.1;
-        contentPanel.add(appDataTextField, gridBagConstraints);
 
         rootFolderLabel.setText("Root folder");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -181,8 +167,6 @@ public class SettingsDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_litmusConfigurationButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel appDataLabel;
-    private javax.swing.JTextField appDataTextField;
     private javax.swing.JLabel appVersionLabel;
     private javax.swing.JTextField appVersionTextField;
     private javax.swing.JPanel contentPanel;

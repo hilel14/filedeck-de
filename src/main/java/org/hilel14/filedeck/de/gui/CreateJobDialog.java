@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
+import org.hilel14.filedeck.de.Config;
 import org.hilel14.filedeck.de.Job;
 import org.hilel14.filedeck.de.JobsManager;
 
@@ -27,14 +28,15 @@ public class CreateJobDialog extends javax.swing.JDialog {
      * Creates new form NewJobDialog
      *
      * @param parent
-     * @param modal
+     * @param userName
+     * @param config
      */
-    public CreateJobDialog(java.awt.Frame parent, boolean modal, String userName) {
-        super(parent, modal);
+    public CreateJobDialog(java.awt.Frame parent, String userName, Config config) {
+        super(parent, true);
         initComponents();
         loadPreferences();
         this.userName = userName;
-        jobsManager = new JobsManager();
+        jobsManager = new JobsManager(config);
     }
 
     private void loadPreferences() {

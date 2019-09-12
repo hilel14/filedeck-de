@@ -18,8 +18,8 @@ public class DataTool {
     static final Logger LOGGER = Logger.getLogger(DataTool.class.getName());
     private final BasicDataSource dataSource;
 
-    public DataTool() {
-        this.dataSource = Config.getInstance().dataSource;
+    public DataTool(BasicDataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public void updateJobStatus(String paperCode, String status) throws SQLException {

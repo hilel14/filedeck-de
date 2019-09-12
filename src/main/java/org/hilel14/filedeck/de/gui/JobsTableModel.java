@@ -2,6 +2,7 @@ package org.hilel14.filedeck.de.gui;
 
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
+import org.hilel14.filedeck.de.Config;
 import org.hilel14.filedeck.de.DataTool;
 
 /**
@@ -12,8 +13,8 @@ public class JobsTableModel extends DefaultTableModel {
 
     final Class[] types = new Class[]{String.class, String.class, String.class, String.class};
 
-    public JobsTableModel(String user, String status) throws SQLException {
-        DataTool dataTool = new DataTool();
+    public JobsTableModel(String user, String status, Config config) throws SQLException {
+        DataTool dataTool = new DataTool(config.getDataSource());
         Object[][] data = dataTool.getJobs(user, status);
         String[] columnNames = new String[]{"Job", "Status", "Start", "User"};
         setDataVector(data, columnNames);

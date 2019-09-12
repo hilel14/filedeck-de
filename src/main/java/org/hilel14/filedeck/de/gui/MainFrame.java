@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import org.hilel14.filedeck.de.Config;
 import org.hilel14.filedeck.de.DataTool;
 import org.hilel14.filedeck.de.JobsManager;
 
@@ -20,14 +21,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     static final Logger LOGGER = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     static Preferences preferences = Preferences.userNodeForPackage(MainFrame.class);
-    JobsManager jobsManager;
+    final Config config;
+    final JobsManager jobsManager;
     CreateJobDialog dialog;
 
     /**
      * Creates new form MainFrame
+     *
+     * @param config
      */
-    public MainFrame() {
-        this.jobsManager = new JobsManager();
+    public MainFrame(Config config) {
+        this.config = config;
+        this.jobsManager = new JobsManager(config);
         initComponents();
         setBoundsFromPrefs();
         try {
@@ -43,7 +48,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void initControlPanel() throws IOException, SQLException {
-        DataTool dataTool = new DataTool();
+        DataTool dataTool = new DataTool(config.getDataSource());
         // job status
         String[] statusCodes = jobsManager.getAllStatusCodes();
         jobStatusComboBox.setModel(new DefaultComboBoxModel(statusCodes));
@@ -58,7 +63,7 @@ public class MainFrame extends javax.swing.JFrame {
         String user = userComboBox.getSelectedItem().toString();
         String status = jobStatusComboBox.getSelectedItem().toString();
         try {
-            jobsTable.setModel(new JobsTableModel(user, status));
+            jobsTable.setModel(new JobsTableModel(user, status, config));
             updateControls();
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
@@ -310,7 +315,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void settingsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsMenuItemActionPerformed
-        SettingsDialog settingsDialog = new SettingsDialog(this, true);
+        SettingsDialog settingsDialog = new SettingsDialog(this, config);
         settingsDialog.setVisible(true);
     }//GEN-LAST:event_settingsMenuItemActionPerformed
 
@@ -443,46 +448,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_releaseVersionButtonActionPerformed
 
     private void newJobMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newJobMenuItemActionPerformed
-        dialog = new CreateJobDialog(this, true, userComboBox.getSelectedItem().toString());
+        dialog = new CreateJobDialog(this, userComboBox.getSelectedItem().toString(), config);
         dialog.setVisible(true);
         fillJobsTable();
     }//GEN-LAST:event_newJobMenuItemActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new MainFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ControlPanel;

@@ -1,14 +1,9 @@
 package org.hilel14.filedeck.de;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,65 +16,33 @@ import org.hilel14.filedeck.de.gui.SettingsDialog;
  */
 public class Config {
 
-    public static final Logger LOGGER = Logger.getLogger(Config.class.getName());
-    public static Config config;
+    private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
 
-    public Path appDataFolder = Paths.get(System.getProperty("user.home")).resolve(".beeri");
-    public Path rootFolder;
-    public Path evoFolder;
-    public Path devFolder;
-    public Path qaFolder;
-    public Path mastersFolder;
-    public BasicDataSource dataSource;
-    public String appVersion = "unknown";
-    public String graphicsFiles;
-    public String litmusConfiguration;
+    private final Path rootFolder;
+    private final Path evoFolder;
+    private final Path devFolder;
+    private final Path qaFolder;
+    private final Path mastersFolder;
+    private BasicDataSource dataSource;
+    private String appVersion = "unknown";
+    private final String graphicsFiles;
+    private final String litmusConfiguration;
 
-    public static Config getInstance() {
-        if (config == null) {
-            try {
-                config = new Config();
-            } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, null, ex);
-            }
-        }
-        return config;
-    }
-
-    private Config() throws IOException {
-        Properties props = getAppProperties();
+    public Config(Properties properties) throws IOException {
         // set paths
-        rootFolder = Paths.get(props.getProperty("paths.root"));
+        rootFolder = Paths.get(properties.getProperty("paths.root"));
         devFolder = rootFolder.resolve("Dev");
         qaFolder = rootFolder.resolve("QA");
         mastersFolder = rootFolder.resolve("Masters");
-        evoFolder = Paths.get(props.getProperty("paths.evo"));
+        evoFolder = Paths.get(properties.getProperty("paths.evo"));
         // SET graphics pattern
-        graphicsFiles = props.getProperty("graphics.files");
+        graphicsFiles = properties.getProperty("graphics.files");
         // create data source
-        createDataSource(props);
+        createDataSource(properties);
         // get app version
         getMavenProperties();
         // get the litmus configuration        
-        litmusConfiguration = props.getProperty("litmus.configuration");
-    }
-
-    private Properties getAppProperties() throws IOException {
-        Properties props = new Properties();
-        Path settingsFile = appDataFolder.resolve("filedeck-settings.xml");
-        LOGGER.log(Level.INFO, "Loading application properties from {0}", settingsFile);
-        if (!Files.exists(settingsFile)) {
-            Files.createDirectories(settingsFile.getParent());
-            InputStream in = Config.class.getClassLoader().getResourceAsStream("default-settings.xml");
-            props.loadFromXML(in);
-            try (OutputStream out = new FileOutputStream(settingsFile.toFile())) {
-                props.storeToXML(out, "default settings for filedeck desktop application " + new Date());
-            }
-        }
-        try (InputStream in = new FileInputStream(settingsFile.toFile())) {
-            props.loadFromXML(in);
-        }
-        return props;
+        litmusConfiguration = properties.getProperty("litmus.configuration");
     }
 
     private void createDataSource(Properties props) {
@@ -113,6 +76,69 @@ public class Config {
             LOGGER.log(Level.INFO, "Version: {0}", props.getProperty("version"));
             this.appVersion = props.getProperty("version");
         }
+    }
+
+    /**
+     * @return the rootFolder
+     */
+    public Path getRootFolder() {
+        return rootFolder;
+    }
+
+    /**
+     * @return the evoFolder
+     */
+    public Path getEvoFolder() {
+        return evoFolder;
+    }
+
+    /**
+     * @return the devFolder
+     */
+    public Path getDevFolder() {
+        return devFolder;
+    }
+
+    /**
+     * @return the qaFolder
+     */
+    public Path getQaFolder() {
+        return qaFolder;
+    }
+
+    /**
+     * @return the mastersFolder
+     */
+    public Path getMastersFolder() {
+        return mastersFolder;
+    }
+
+    /**
+     * @return the dataSource
+     */
+    public BasicDataSource getDataSource() {
+        return dataSource;
+    }
+
+    /**
+     * @return the appVersion
+     */
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    /**
+     * @return the graphicsFiles
+     */
+    public String getGraphicsFiles() {
+        return graphicsFiles;
+    }
+
+    /**
+     * @return the litmusConfiguration
+     */
+    public String getLitmusConfiguration() {
+        return litmusConfiguration;
     }
 
 }
