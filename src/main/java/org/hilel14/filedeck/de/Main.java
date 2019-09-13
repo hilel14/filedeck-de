@@ -1,11 +1,11 @@
-package org.hilel14.filedeck.de.gui;
+package org.hilel14.filedeck.de;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.hilel14.filedeck.de.Config;
+import org.hilel14.filedeck.de.gui.MainFrame;
 
 /**
  *
