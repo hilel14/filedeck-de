@@ -27,7 +27,7 @@ public class Config {
     private String appVersion = "unknown";
     private final String graphicsFiles;
     private final String litmusConfiguration;
-
+    
     public Config(Properties properties) throws IOException {
         // set paths
         rootFolder = Paths.get(properties.getProperty("paths.root"));

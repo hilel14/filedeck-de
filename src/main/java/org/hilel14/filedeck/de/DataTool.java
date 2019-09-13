@@ -45,6 +45,19 @@ public class DataTool {
         return users.toArray(new String[0]);
     }
 
+    public String[] getAllEnvelopes() throws SQLException {
+        String qry = "SELECT envelope_text FROM fd5_envelope_codes ORDER BY envelope_code ASC";
+        List<String> envelopes = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(qry);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                envelopes.add(rs.getString("envelope_text"));
+            }
+        }
+        return envelopes.toArray(new String[0]);
+    }
+
     public Object[][] getJobs(String user, String status) throws SQLException {
         String qry = "SELECT * FROM fd5_jobs WHERE user_name = ?";
         if (status.equals("any")) {

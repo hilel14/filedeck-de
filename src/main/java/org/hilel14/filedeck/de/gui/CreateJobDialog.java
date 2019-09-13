@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.hilel14.filedeck.de.Config;
+import org.hilel14.filedeck.de.DataTool;
 import org.hilel14.filedeck.de.Job;
 import org.hilel14.filedeck.de.JobsManager;
 
@@ -37,6 +40,15 @@ public class CreateJobDialog extends javax.swing.JDialog {
         loadPreferences();
         this.userName = userName;
         jobsManager = new JobsManager(config);
+        try {
+            initEnvelopeLists(config.getDataSource());
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,
+                    "Unable to get list of envelopes from database",
+                    "FileDeck operation error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void loadPreferences() {
@@ -77,8 +89,6 @@ public class CreateJobDialog extends javax.swing.JDialog {
         baseEnvelopesList = new javax.swing.JList<>();
         selectedEnvelopesScrollPane = new javax.swing.JScrollPane();
         selectedEnvelopesList = new javax.swing.JList<>();
-        addEnvelopeButton = new javax.swing.JButton();
-        removeEnvelopeButton = new javax.swing.JButton();
         actionsPanel = new javax.swing.JPanel();
         createJobButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
@@ -158,10 +168,11 @@ public class CreateJobDialog extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
         contentPanel.add(baseVersionComboBox, gridBagConstraints);
 
-        baseEnvelopesList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "env1", "env2", "env3", "env4", "env5", "env6", "env7", "env8", "env9", "env10", "env11", "env12", "env13", "env14", "env15", "env16", "env101", "env102", "return_env", "special_env" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        baseEnvelopesList.setToolTipText("Double click to add envelope to job");
+        baseEnvelopesList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                baseEnvelopesListMouseClicked(evt);
+            }
         });
         baseEnvelopesScrollPane.setViewportView(baseEnvelopesList);
 
@@ -175,6 +186,12 @@ public class CreateJobDialog extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 2);
         contentPanel.add(baseEnvelopesScrollPane, gridBagConstraints);
 
+        selectedEnvelopesList.setToolTipText("Double click to removeenvelope envelope from job");
+        selectedEnvelopesList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selectedEnvelopesListMouseClicked(evt);
+            }
+        });
         selectedEnvelopesScrollPane.setViewportView(selectedEnvelopesList);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -186,28 +203,6 @@ public class CreateJobDialog extends javax.swing.JDialog {
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
         contentPanel.add(selectedEnvelopesScrollPane, gridBagConstraints);
-
-        addEnvelopeButton.setText(">>");
-        addEnvelopeButton.setToolTipText("Add envelope");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 2);
-        contentPanel.add(addEnvelopeButton, gridBagConstraints);
-
-        removeEnvelopeButton.setText("<<");
-        removeEnvelopeButton.setToolTipText("Remove envelope");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
-        contentPanel.add(removeEnvelopeButton, gridBagConstraints);
 
         getContentPane().add(contentPanel, java.awt.BorderLayout.CENTER);
 
@@ -247,6 +242,9 @@ public class CreateJobDialog extends javax.swing.JDialog {
             job.setBaseJob(baseJobTextField.getText().trim());
             job.setBaseVersion(baseVersionComboBox.getSelectedItem().toString());
         }
+        for (int i = 0; i < selectedEnvelopesList.getModel().getSize(); i++) {
+            job.getEnvelopes().add(selectedEnvelopesList.getModel().getElementAt(i));
+        }
         try {
             jobsManager.createJob(job);
             this.dispose();
@@ -271,6 +269,28 @@ public class CreateJobDialog extends javax.swing.JDialog {
     private void baseJobTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_baseJobTextFieldKeyReleased
         updateControls();
     }//GEN-LAST:event_baseJobTextFieldKeyReleased
+
+    private void baseEnvelopesListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_baseEnvelopesListMouseClicked
+        if (evt.getClickCount() == 2) {
+            String env = baseEnvelopesList.getSelectedValue();
+            if (env != null) {
+                DefaultListModel model = (DefaultListModel) selectedEnvelopesList.getModel();
+                if (!model.contains(env)) {
+                    model.addElement(env);
+                }
+            }
+        }
+    }//GEN-LAST:event_baseEnvelopesListMouseClicked
+
+    private void selectedEnvelopesListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectedEnvelopesListMouseClicked
+        if (evt.getClickCount() == 2) {
+            String env = selectedEnvelopesList.getSelectedValue();
+            if (env != null) {
+                DefaultListModel model = (DefaultListModel) selectedEnvelopesList.getModel();
+                model.removeElement(env);
+            }
+        }
+    }//GEN-LAST:event_selectedEnvelopesListMouseClicked
     private void updateControls() {
         baseVersionComboBox.removeAllItems();
         String baseJob = baseJobTextField.getText().trim();
@@ -292,8 +312,6 @@ public class CreateJobDialog extends javax.swing.JDialog {
                 }
             }
         }
-        //baseEnvelopesList.setModel(new DefaultListModel());
-        //selectedEnvelopesList.setModel(new DefaultListModel());
         enableCreateJobButton();
     }
 
@@ -308,10 +326,20 @@ public class CreateJobDialog extends javax.swing.JDialog {
         }
     }
 
+    private void initEnvelopeLists(BasicDataSource dataSource) throws SQLException {
+        // base envelopes
+        String[] envelopes = new DataTool(dataSource).getAllEnvelopes();
+        DefaultListModel model = new DefaultListModel();
+        for (String envelope : envelopes) {
+            model.addElement(envelope);
+        }
+        baseEnvelopesList.setModel(model);
+        // selected envelopes
+        selectedEnvelopesList.setModel(new DefaultListModel());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionsPanel;
-    private javax.swing.JButton addEnvelopeButton;
     private javax.swing.JList<String> baseEnvelopesList;
     private javax.swing.JScrollPane baseEnvelopesScrollPane;
     private javax.swing.JLabel baseJobLabel;
@@ -323,7 +351,6 @@ public class CreateJobDialog extends javax.swing.JDialog {
     private javax.swing.JButton createJobButton;
     private javax.swing.JLabel newJobLabel;
     private javax.swing.JTextField newJobTextField;
-    private javax.swing.JButton removeEnvelopeButton;
     private javax.swing.JList<String> selectedEnvelopesList;
     private javax.swing.JScrollPane selectedEnvelopesScrollPane;
     // End of variables declaration//GEN-END:variables
