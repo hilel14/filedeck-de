@@ -134,4 +134,29 @@ public class JobsManagerTest {
         assertTrue(Files.exists(path.resolve("123456-page1.indd")));
     }
 
+    /**
+     * Test of moveJobToQa and releaseVersion, methods, of class JobsManager.
+     *
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testReleaseJob() throws Exception {
+        // start with a new job
+        Job job = new Job();
+        job.setPaperCode("003123");
+        job.setUserName("test");
+        JobsManager instance = new JobsManager(config);
+        instance.createJob(job);
+        // move job to qa
+        instance.moveJobToQa(job.getPaperCode());
+        Path path = config.getDevFolder().resolve("003").resolve("003123");
+        assertFalse(Files.exists(path));
+        path = config.getQaFolder().resolve("003").resolve("003123");
+        assertTrue(Files.exists(path));
+        // release version
+        instance.releaseVersion(job.getPaperCode());
+        path = config.getMastersFolder().resolve("003").resolve("003123").resolve("v_01");
+        assertTrue(Files.exists(path));
+    }
+
 }
