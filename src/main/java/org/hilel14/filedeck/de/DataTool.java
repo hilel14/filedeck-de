@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -23,7 +24,8 @@ public class DataTool {
     }
 
     public String[] getAllUsers() throws SQLException {
-        String qry = "SELECT user_name FROM fd5_users ORDER BY user_name ASC";
+        // collect all from users table
+        String qry = "SELECT user_name FROM fd5_users";
         List<String> users = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(qry);
@@ -32,6 +34,20 @@ public class DataTool {
                 users.add(rs.getString("user_name"));
             }
         }
+        // add zombies from jobs table
+        qry = "SELECT DISTINCT user_name FROM fd5_jobs";
+        try (Connection connection = dataSource.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(qry);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                String user = rs.getString("user_name");
+                if (!users.contains(user)) {
+                    users.add(rs.getString("user_name"));
+                }
+            }
+        }
+        // sort and return the result in an array (for DefaultComboBoxModel constructure)
+        Collections.sort(users);
         return users.toArray(new String[0]);
     }
 
