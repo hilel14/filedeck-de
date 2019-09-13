@@ -5,7 +5,7 @@ CREATE TABLE fd5_envelope_codes (
 
 CREATE TABLE fd5_users (
   user_id int PRIMARY KEY auto_increment,
-  user_name varchar(255) NOT NULL
+  user_name varchar(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE fd5_jobs (

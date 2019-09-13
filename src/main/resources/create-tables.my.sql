@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS `fd5_users`;
 CREATE TABLE `fd5_users` (
   `user_id` int(11) NOT NULL auto_increment,
   `user_name` varchar(255) NOT NULL,
-  PRIMARY KEY  (`user_id`)
+  PRIMARY KEY  (`user_id`),
+  UNIQUE INDEX (user_name)
 ) ENGINE=MyISAM CHARSET=utf8;
 
 DROP TABLE IF EXISTS `fd5_jobs`;
