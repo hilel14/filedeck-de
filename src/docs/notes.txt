@@ -1,5 +1,0 @@
-make user name unique in users table
-
-create launch script - located on Desktop, launches application from RootFolder.
-Script has to make sure user is connected.
-config.xml should be in classpath (lib folder) and override the one in resources
