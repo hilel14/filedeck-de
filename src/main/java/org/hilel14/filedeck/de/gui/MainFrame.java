@@ -49,14 +49,20 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void initControlPanel() throws IOException, SQLException {
         DataTool dataTool = new DataTool(config.getDataSource());
-        // job status
-        String[] statusCodes = jobsManager.getAllStatusCodes();
-        jobStatusComboBox.setModel(new DefaultComboBoxModel(statusCodes));
-        jobStatusComboBox.setSelectedItem(preferences.get("MainFrame.jobStatus", "any"));
-        // users
+        fillUsersCombo(dataTool);
+        fillStatusCombo(dataTool);
+    }
+
+    private void fillUsersCombo(DataTool dataTool) throws SQLException {
         String[] users = dataTool.getAllUsers();
         userComboBox.setModel(new DefaultComboBoxModel(users));
         userComboBox.setSelectedItem(preferences.get("MainFrame.userName", "admin"));
+    }
+
+    private void fillStatusCombo(DataTool dataTool) throws SQLException {
+        String[] statusCodes = jobsManager.getAllStatusCodes();
+        jobStatusComboBox.setModel(new DefaultComboBoxModel(statusCodes));
+        jobStatusComboBox.setSelectedItem(preferences.get("MainFrame.jobStatus", "any"));
     }
 
     private void fillJobsTable() {
@@ -293,6 +299,11 @@ public class MainFrame extends javax.swing.JFrame {
         toolsMenu.add(newJobMenuItem);
 
         newUserMenuItem.setText("New user...");
+        newUserMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newUserMenuItemActionPerformed(evt);
+            }
+        });
         toolsMenu.add(newUserMenuItem);
 
         settingsMenuItem.setText("Settings...");
@@ -452,6 +463,23 @@ public class MainFrame extends javax.swing.JFrame {
         dialog.setVisible(true);
         fillJobsTable();
     }//GEN-LAST:event_newJobMenuItemActionPerformed
+
+    private void newUserMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newUserMenuItemActionPerformed
+        String user = JOptionPane.showInputDialog("Type new user name");
+        if (user != null) {
+            try {
+                DataTool dataTool = new DataTool(config.getDataSource());
+                dataTool.addUser(user);
+                fillUsersCombo(dataTool);
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null,
+                        "Error when trying to add user " + user,
+                        "FileDeck operation error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_newUserMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -22,16 +22,6 @@ public class DataTool {
         this.dataSource = dataSource;
     }
 
-    public void updateJobStatus(String paperCode, String status) throws SQLException {
-        String qry = "UPDATE fd5_jobs SET status_code = ? WHERE paper_code = ?";
-        try (Connection connection = dataSource.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(qry);
-            statement.setString(1, status);
-            statement.setString(2, paperCode);
-            statement.executeUpdate();
-        }
-    }
-
     public String[] getAllUsers() throws SQLException {
         String qry = "SELECT user_name FROM fd5_users ORDER BY user_name ASC";
         List<String> users = new ArrayList<>();
@@ -79,6 +69,44 @@ public class DataTool {
         }
     }
 
+    public void addUser(String userName) throws SQLException {
+        String sql = "INSERT INTO fd5_users (user_name) VALUES (?)";
+        try (Connection connection = dataSource.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userName);
+            statement.executeUpdate();
+        }
+    }
+
+    public void createJob(String paperCode, String userName) throws SQLException {
+        String sql = "INSERT INTO fd5_jobs (paper_code, user_name) VALUES (?,?)";
+        try (Connection connection = dataSource.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, paperCode);
+            statement.setString(2, userName);
+            statement.executeUpdate();
+        }
+    }
+
+    public void updateJobStatus(String paperCode, String status) throws SQLException {
+        String qry = "UPDATE fd5_jobs SET status_code = ? WHERE paper_code = ?";
+        try (Connection connection = dataSource.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(qry);
+            statement.setString(1, status);
+            statement.setString(2, paperCode);
+            statement.executeUpdate();
+        }
+    }
+
+    public void deleteJob(String paperCode) throws SQLException {
+        String qry = "DELETE FROM fd5_jobs WHERE paper_code = ?";
+        try (Connection connection = dataSource.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(qry);
+            statement.setString(1, paperCode);
+            statement.executeUpdate();
+        }
+    }
+
     private Object[][] resultSetToArray(ResultSet rs) throws SQLException {
         List<String[]> jobs = new ArrayList<>();
         while (rs.next()) {
@@ -92,22 +120,4 @@ public class DataTool {
         return jobs.toArray(new Object[0][0]);
     }
 
-    void deleteJob(String paperCode) throws SQLException {
-        String qry = "DELETE FROM fd5_jobs WHERE paper_code = ?";
-        try (Connection connection = dataSource.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(qry);
-            statement.setString(1, paperCode);
-            statement.executeUpdate();
-        }
-    }
-
-    void createJob(String paperCode, String userName) throws SQLException {
-        String sql = "INSERT INTO fd5_jobs (paper_code, user_name) VALUES (?,?)";
-        try (Connection connection = dataSource.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, paperCode);
-            statement.setString(2, userName);
-            statement.executeUpdate();
-        }
-    }
 }
