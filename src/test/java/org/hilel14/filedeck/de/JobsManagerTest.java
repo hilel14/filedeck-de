@@ -13,10 +13,10 @@ import java.util.Properties;
 import org.hilel14.filedeck.de.gui.Main;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -97,22 +97,41 @@ public class JobsManagerTest {
      */
     @Test
     public void testCreateJob() throws Exception {
-        // new job
+        // completly new job
         Job job = new Job();
-        job.setPaperCode("002100");
+        job.setPaperCode("001002");
         job.setUserName("test");
         JobsManager instance = new JobsManager(config);
         instance.createJob(job);
-        Assertions.assertTrue(Files.exists(config.getDevFolder().resolve("002").resolve("002100")));
-        // new version of the same job
+        Path path = config.getDevFolder().resolve("001").resolve("001002");
+        assertTrue(Files.exists(path));
+        // new version of an existing job
         job = new Job();
-        job.setPaperCode("001001");
-        job.setBaseJob("001001");
-        job.setBaseVersion("v_02");
+        job.setPaperCode("031000");
+        job.setBaseJob("031000");
+        job.setBaseVersion("v_04");
         job.setUserName("test");
         instance = new JobsManager(config);
         instance.createJob(job);
-        Assertions.assertTrue(Files.exists(config.getDevFolder().resolve("001").resolve("001001")));
+        path = config.getDevFolder().resolve("031").resolve("031000").resolve("031000_EbSf_86.indd");
+        assertTrue(Files.exists(path));
+        path = config.getDevFolder().resolve("031").resolve("031000").resolve(".DS_Store");
+        assertFalse(Files.exists(path));
+        for (String folder : new String[]{"inbox", "outbox", "press"}) {
+            path = config.getDevFolder().resolve("031").resolve("031000").resolve(folder);
+            assertTrue(path.toFile().list().length == 0);
+        }
+        // new job based on another job with envelopes
+        job = new Job();
+        job.setPaperCode("123456");
+        job.setBaseJob("001002");
+        job.setBaseVersion("v_02");
+        job.getEnvelopes().add("env105");
+        job.setUserName("test");
+        instance = new JobsManager(config);
+        instance.createJob(job);
+        path = config.getDevFolder().resolve("123").resolve("123456").resolve("envelopes").resolve("env105");
+        assertTrue(Files.exists(path.resolve("123456-page1.indd")));
     }
 
 }
