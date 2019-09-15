@@ -23,7 +23,6 @@ public class MainFrame extends javax.swing.JFrame {
     static Preferences preferences = Preferences.userNodeForPackage(MainFrame.class);
     final Config config;
     final JobsManager jobsManager;
-    CreateJobDialog dialog;
 
     /**
      * Creates new form MainFrame
@@ -459,9 +458,17 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_releaseVersionButtonActionPerformed
 
     private void newJobMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newJobMenuItemActionPerformed
-        dialog = new CreateJobDialog(this, userComboBox.getSelectedItem().toString(), config);
-        dialog.setVisible(true);
-        fillJobsTable();
+        String user = userComboBox.getSelectedItem().toString();
+        if (user.equals("all")) {
+            JOptionPane.showMessageDialog(null,
+                    "Select some user to add new job",
+                    "FileDeck information",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            CreateJobDialog dialog = new CreateJobDialog(this, user, config);
+            dialog.setVisible(true);
+            fillJobsTable();
+        }
     }//GEN-LAST:event_newJobMenuItemActionPerformed
 
     private void newUserMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newUserMenuItemActionPerformed
@@ -471,6 +478,7 @@ public class MainFrame extends javax.swing.JFrame {
                 DataTool dataTool = new DataTool(config.getDataSource());
                 dataTool.addUser(user);
                 fillUsersCombo(dataTool);
+                userComboBox.setSelectedItem(user);
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null,

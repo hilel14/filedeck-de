@@ -46,8 +46,11 @@ public class DataTool {
                 }
             }
         }
-        // sort and return the result in an array (for DefaultComboBoxModel constructure)
+        // sort users
         Collections.sort(users);
+        // add special experssion to define all users
+        users.add(0, "all");
+        // return results as array (for DefaultComboBoxModel constructure)
         return users.toArray(new String[0]);
     }
 
@@ -65,22 +68,45 @@ public class DataTool {
     }
 
     public Object[][] getJobs(String user, String status) throws SQLException {
-        String qry = "SELECT * FROM fd5_jobs WHERE user_name = ?";
         if (status.equals("any")) {
-            try (Connection connection = dataSource.getConnection();) {
-                PreparedStatement statement = connection.prepareStatement(qry);
-                statement.setString(1, user);
-                ResultSet rs = statement.executeQuery();
-                return resultSetToArray(rs);
+            if (user.equals("all")) {
+                // any status, all users
+                String qry = "SELECT * FROM fd5_jobs";
+                try (Connection connection = dataSource.getConnection();) {
+                    PreparedStatement statement = connection.prepareStatement(qry);
+                    ResultSet rs = statement.executeQuery();
+                    return resultSetToArray(rs);
+                }
+            } else {
+                // any status, specific user
+                String qry = "SELECT * FROM fd5_jobs WHERE user_name = ?";
+                try (Connection connection = dataSource.getConnection();) {
+                    PreparedStatement statement = connection.prepareStatement(qry);
+                    statement.setString(1, user);
+                    ResultSet rs = statement.executeQuery();
+                    return resultSetToArray(rs);
+                }
             }
         } else {
-            qry += " AND status_code = ?";
-            try (Connection connection = dataSource.getConnection();) {
-                PreparedStatement statement = connection.prepareStatement(qry);
-                statement.setString(1, user);
-                statement.setString(2, status);
-                ResultSet rs = statement.executeQuery();
-                return resultSetToArray(rs);
+            if (user.equals("all")) {
+                // specific status, all users
+                String qry = "SELECT * FROM fd5_jobs WHERE status_code = ?";
+                try (Connection connection = dataSource.getConnection();) {
+                    PreparedStatement statement = connection.prepareStatement(qry);
+                    statement.setString(1, status);
+                    ResultSet rs = statement.executeQuery();
+                    return resultSetToArray(rs);
+                }
+            } else {
+                // specific status and user
+                String qry = "SELECT * FROM fd5_jobs WHERE status_code = ? AND user_name = ?";
+                try (Connection connection = dataSource.getConnection();) {
+                    PreparedStatement statement = connection.prepareStatement(qry);
+                    statement.setString(1, status);
+                    statement.setString(2, user);
+                    ResultSet rs = statement.executeQuery();
+                    return resultSetToArray(rs);
+                }
             }
         }
     }
