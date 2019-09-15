@@ -29,7 +29,7 @@ public class Main {
     }
 
     public static Properties getProperties() throws IOException {
-        LOGGER.log(Level.INFO, "Loading application properties from classpath");
+        LOGGER.log(Level.FINE, "Loading application properties from classpath");
         Properties props = new Properties();
         InputStream in = Main.class.getClassLoader().getResourceAsStream("config.xml");
         props.loadFromXML(in);

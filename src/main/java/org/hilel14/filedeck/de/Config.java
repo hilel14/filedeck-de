@@ -27,7 +27,7 @@ public class Config {
     private String appVersion = "unknown";
     private final String graphicsFiles;
     private final String litmusConfiguration;
-    
+
     public Config(Properties properties) throws IOException {
         // set paths
         rootFolder = Paths.get(properties.getProperty("paths.root"));
@@ -55,7 +55,7 @@ public class Config {
         dataSource.setMaxIdle(10);
         dataSource.setMaxOpenPreparedStatements(100);
         dataSource.setValidationQuery("select 1");
-        LOGGER.log(Level.INFO, "Database connection string: {0}", props.getProperty("db.url"));
+        LOGGER.log(Level.CONFIG, "Database connection string: {0}", props.getProperty("db.url"));
     }
 
     /**
@@ -71,10 +71,8 @@ public class Config {
             LOGGER.log(Level.WARNING, "Unable to load {0}", resourceName);
         } else {
             props.load(inStream);
-            LOGGER.log(Level.INFO, "Group ID: {0}", props.getProperty("groupId"));
-            LOGGER.log(Level.INFO, "Artifact ID: {0}", props.getProperty("artifactId"));
-            LOGGER.log(Level.INFO, "Version: {0}", props.getProperty("version"));
             this.appVersion = props.getProperty("version");
+            LOGGER.log(Level.INFO, "{0} {1}", new Object[]{props.getProperty("artifactId"), props.getProperty("version")});
         }
     }
 
