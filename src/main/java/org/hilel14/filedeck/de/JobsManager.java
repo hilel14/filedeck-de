@@ -9,8 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +24,7 @@ import java.util.logging.Logger;
 public class JobsManager {
 
     public static final Logger LOGGER = Logger.getLogger(JobsManager.class.getName());
+    final String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     Config config;
     DataTool dataTool;
 
@@ -106,29 +109,11 @@ public class JobsManager {
     }
 
     public void releaseVersion(String paperCode) throws IOException, SQLException {
-        Path sourceFolder = findJobFolder(paperCode, "qa");
-        // delete old pdf folder from outbox
-        Path old = sourceFolder.resolve("outobx").resolve("old");
-        if (Files.exists(old)) {
-            deleteFolder(old);
-        }
-        // delete old pdf folder from outbox in envelopes
-        Path envFolder = sourceFolder.resolve("envelopes");
-        if (Files.exists(envFolder)) {
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(envFolder)) {
-                for (Path source : stream) {
-                    if (Files.isDirectory(source) && source.getFileName().toString().contains("env")) {
-                        old = source.resolve("outobx").resolve("old");
-                        if (Files.exists(old)) {
-                            deleteFolder(old);
-                        }
-                    }
-                }
-            }
-        }
-        // move job folder from QA to Masters
-        Path targetFolder = findJobFolder(paperCode, "masters");
+        // find next version
         String nextVersion = findNextVersion(paperCode);
+        // move job folder from QA to Masters
+        Path sourceFolder = findJobFolder(paperCode, "qa");
+        Path targetFolder = findJobFolder(paperCode, "masters");
         Files.createDirectories(targetFolder);
         Files.move(sourceFolder, targetFolder.resolve(nextVersion));
         // delete record from jobs table
@@ -184,6 +169,10 @@ public class JobsManager {
         }
         String lastVersion = versions.get(versions.size() - 1);
         int nextVersion = Integer.parseInt(lastVersion.substring(2)) + 1;
+        if (nextVersion > 99) {
+            archiveOldVersions(paperCode);
+            return "v_01";
+        }
         return "v_" + addLeadinZeros(nextVersion, 2);
     }
 
@@ -216,5 +205,16 @@ public class JobsManager {
     public void openJobFolder(String paperCode, String jobStatus) throws IOException {
         Path target = findJobFolder(paperCode, jobStatus);
         Desktop.getDesktop().open(target.toFile());
+    }
+
+    private void archiveOldVersions(String paperCode) throws IOException {
+        Path jobFolder = findJobFolder(paperCode, "masters");
+        Path archFolder = jobFolder.resolve("archive").resolve(currentDate);
+        Files.createDirectories(archFolder);
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(jobFolder, "v_*")) {
+            for (Path source : stream) {
+                Files.move(source, archFolder.resolve(source.getFileName()));
+            }
+        }
     }
 }

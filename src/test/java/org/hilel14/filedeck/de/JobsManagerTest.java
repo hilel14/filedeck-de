@@ -98,39 +98,39 @@ public class JobsManagerTest {
     public void testCreateJob() throws Exception {
         // completly new job
         Job job = new Job();
-        job.setPaperCode("001002");
+        job.setPaperCode("002001");
         job.setUserName("test");
         JobsManager instance = new JobsManager(config);
         instance.createJob(job);
-        Path path = config.getDevFolder().resolve("001").resolve("001002");
+        Path path = config.getDevFolder().resolve("002").resolve("002001");
         assertTrue(Files.exists(path));
         // new version of an existing job
         job = new Job();
-        job.setPaperCode("031000");
-        job.setBaseJob("031000");
-        job.setBaseVersion("v_04");
+        job.setPaperCode("001001");
+        job.setBaseJob("001001");
+        job.setBaseVersion("v_02");
         job.setUserName("test");
         instance = new JobsManager(config);
         instance.createJob(job);
-        path = config.getDevFolder().resolve("031").resolve("031000").resolve("031000_EbSf_86.indd");
+        path = config.getDevFolder().resolve("001").resolve("001001").resolve("001001-v2.indd");
         assertTrue(Files.exists(path));
-        path = config.getDevFolder().resolve("031").resolve("031000").resolve(".DS_Store");
+        path = config.getDevFolder().resolve("001").resolve("001001").resolve("zevel-1.doc");
         assertFalse(Files.exists(path));
         for (String folder : new String[]{"inbox", "outbox", "press"}) {
-            path = config.getDevFolder().resolve("031").resolve("031000").resolve(folder);
+            path = config.getDevFolder().resolve("001").resolve("001001").resolve(folder);
             assertTrue(path.toFile().list().length == 0);
         }
         // new job based on another job with envelopes
         job = new Job();
-        job.setPaperCode("123456");
+        job.setPaperCode("002002");
         job.setBaseJob("001002");
-        job.setBaseVersion("v_02");
-        job.getEnvelopes().add("env105");
+        job.setBaseVersion("v_01");
+        job.getEnvelopes().add("env11");
         job.setUserName("test");
         instance = new JobsManager(config);
         instance.createJob(job);
-        path = config.getDevFolder().resolve("123").resolve("123456").resolve("envelopes").resolve("env105");
-        assertTrue(Files.exists(path.resolve("123456-page1.indd")));
+        path = config.getDevFolder().resolve("002").resolve("002002").resolve("envelopes").resolve("env11");
+        assertTrue(Files.exists(path.resolve("002002-page1.indd")));
     }
 
     /**
@@ -142,19 +142,19 @@ public class JobsManagerTest {
     public void testReleaseJob() throws Exception {
         // start with a new job
         Job job = new Job();
-        job.setPaperCode("003123");
+        job.setPaperCode("003001");
         job.setUserName("test");
         JobsManager instance = new JobsManager(config);
         instance.createJob(job);
         // move job to qa
         instance.moveJobToQa(job.getPaperCode());
-        Path path = config.getDevFolder().resolve("003").resolve("003123");
+        Path path = config.getDevFolder().resolve("003").resolve("003001");
         assertFalse(Files.exists(path));
-        path = config.getQaFolder().resolve("003").resolve("003123");
+        path = config.getQaFolder().resolve("003").resolve("003001");
         assertTrue(Files.exists(path));
         // release version
         instance.releaseVersion(job.getPaperCode());
-        path = config.getMastersFolder().resolve("003").resolve("003123").resolve("v_01");
+        path = config.getMastersFolder().resolve("003").resolve("003001").resolve("v_01");
         assertTrue(Files.exists(path));
     }
 

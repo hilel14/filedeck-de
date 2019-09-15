@@ -1,119 +1,32 @@
-Masters/001/001002/v_01/001002-page1.indd
-Masters/001/001002/v_01/doc1.psd
-Masters/001/001002/v_01/important-001002.ai
-Masters/001/001002/v_01/zevel1.txt
-Masters/001/001002/v_01/zevel2.db
-Masters/001/001002/v_01/inbox/doc-2.xls
-Masters/001/001002/v_01/outbox/doc-3.tif
-Masters/001/001002/v_01/press/doc-4.pdf
-Masters/001/001002/v_02/001002-page1.indd
-Masters/001/001002/v_02/doc11.psd
-Masters/001/001002/v_02/new-001002.ai
-Masters/001/001002/v_02/zevel1.txt
-Masters/001/001002/v_02/zevel2.db
-Masters/001/001002/v_02/inbox/doc-12.xls
-Masters/001/001002/v_02/outbox/doc-13.tif
-Masters/001/001002/v_02/press/doc-14.pdf
-Masters/001/001002/v_02/envelopes/env105/001002-page1.indd
-Masters/001/001002/v_02/envelopes/env105/doc11.psd
-Masters/001/001002/v_02/envelopes/env105/new-001002.ai
-Masters/001/001002/v_02/envelopes/env105/zevel1.txt
-Masters/001/001002/v_02/envelopes/env105/zevel2.db
-Masters/001/001002/v_02/envelopes/env105/inbox/doc-12.xls
-Masters/001/001002/v_02/envelopes/env105/outbox/doc-13.tif
-Masters/001/001002/v_02/envelopes/env105/press/doc-14.pdf
-Masters/031/031000/.DS_Store
-Masters/031/031000/v_01/.DS_Store
-Masters/031/031000/v_01/014000.indd
-Masters/031/031000/v_01/026000.indd
-Masters/031/031000/v_01/026_Logo.psd
-Masters/031/031000/v_01/031000.indd
-Masters/031/031000/v_01/046000.indd
-Masters/031/031000/v_01/052000.indd
-Masters/031/031000/v_01/inbox/031488A01UD1963.pdf
-Masters/031/031000/v_01/outbox/014-maatafit1.pdf
-Masters/031/031000/v_01/outbox/014-maatafit2.pdf
-Masters/031/031000/v_01/outbox/014-maatafit3.pdf
-Masters/031/031000/v_01/outbox/014-maatafit4.pdf
-Masters/031/031000/v_01/outbox/026-maatafit.pdf
-Masters/031/031000/v_01/outbox/026-maatafit1.pdf
-Masters/031/031000/v_01/outbox/026-maatafit2.pdf
-Masters/031/031000/v_01/outbox/026-maatafit3.pdf
-Masters/031/031000/v_01/outbox/026-maatafit4.pdf
-Masters/031/031000/v_01/outbox/031-maatafit1.pdf
-Masters/031/031000/v_01/outbox/031-maatafit2.pdf
-Masters/031/031000/v_01/outbox/031-maatafit3.pdf
-Masters/031/031000/v_01/outbox/031-maatafit4.pdf
-Masters/031/031000/v_01/outbox/046-maatafit1.pdf
-Masters/031/031000/v_01/outbox/046-maatafit2.pdf
-Masters/031/031000/v_01/outbox/046-maatafit3.pdf
-Masters/031/031000/v_01/outbox/046-maatafit4.pdf
-Masters/031/031000/v_01/outbox/052-maatafit1.pdf
-Masters/031/031000/v_01/outbox/052-maatafit2.pdf
-Masters/031/031000/v_01/outbox/052-maatafit3.pdf
-Masters/031/031000/v_01/outbox/052-maatafit4.pdf
-Masters/031/031000/v_02/031000_EbSf_86.indd
-Masters/031/031000/v_02/inbox/031492.pdf
-Masters/031/031000/v_02/inbox/031492_b.pdf
-Masters/031/031000/v_02/outbox/031000_EbSf.pdf
-Masters/031/031000/v_02/press/~temp123.pdf
-Masters/031/031000/v_03/031000_EbSf_86.indd
-Masters/031/031000/v_03/inbox/121903(e)_maatafa_beeri_MB-wide_pnim_con_print.zip
-Masters/031/031000/v_03/inbox/121907(b)_shovar12_fb_con_print.zip
-Masters/031/031000/v_03/inbox/50-0440 Pikdonot hevley eretz_BEERI_MAATAFIT 2 Folder/.DS_Store
-Masters/031/031000/v_03/inbox/50-0440 Pikdonot hevley eretz_BEERI_MAATAFIT 2 Folder/50-0440 Pikdonot hevley eretz_BEERI_MAATAFIT 2.idml
-Masters/031/031000/v_03/inbox/50-0440 Pikdonot hevley eretz_BEERI_MAATAFIT 2 Folder/50-0440 Pikdonot hevley eretz_BEERI_MAATAFIT 2.indd
-Masters/031/031000/v_03/inbox/50-0440 Pikdonot hevley eretz_BEERI_MAATAFIT 2 Folder/50-0440 Pikdonot hevley eretz_BEERI_MAATAFIT 2.pdf
-Masters/031/031000/v_03/inbox/50-0440 Pikdonot hevley eretz_BEERI_MAATAFIT 2 Folder/Links/Binleumi-ScreenCapture yed.jpg
-Masters/031/031000/v_03/inbox/50-0440 Pikdonot hevley eretz_BEERI_MAATAFIT 2 Folder/Links/DSC_5717-Yed.psd
-Masters/031/031000/v_03/inbox/RE_ 031000.eml
-Masters/031/031000/v_03/outbox/031000_EbSf.pdf
-Masters/031/031000/v_03/press/031000_Eb.eps
-Masters/031/031000/v_04/.DS_Store
-Masters/031/031000/v_04/031000_EbSf_86.indd
-Masters/031/031000/v_04/inbox/.DS_Store
-Masters/031/031000/v_04/inbox/121903(e)_maatafa_beeri_MB-wide_pnim_con_print 2/121903(e)_maatafa_beeri_MB-wide_pnim_con.idml
-Masters/031/031000/v_04/inbox/121903(e)_maatafa_beeri_MB-wide_pnim_con_print 2/121903(e)_maatafa_beeri_MB-wide_pnim_con.indd
-Masters/031/031000/v_04/inbox/121903(e)_maatafa_beeri_MB-wide_pnim_con_print 2/121903(e)_maatafa_beeri_MB-wide_pnim_con_print.pdf
-Masters/031/031000/v_04/inbox/121903(e)_maatafa_beeri_MB-wide_pnim_con_print 2/link/shutterstock_115894966 blue habenleumi2.ai
-Masters/031/031000/v_04/inbox/121907(b)_shovar12_fb_con_print/121907(b)_shovar12_fb_con Folder/121907(b)_shovar12_fb_con.indd
-Masters/031/031000/v_04/inbox/121907(b)_shovar12_fb_con_print/121907(b)_shovar12_fb_con Folder/Document fonts/AdobeFnt14.lst
-Masters/031/031000/v_04/inbox/121907(b)_shovar12_fb_con_print/121907(b)_shovar12_fb_con Folder/Document fonts/arial.ttf
-Masters/031/031000/v_04/inbox/121907(b)_shovar12_fb_con_print/121907(b)_shovar12_fb_con Folder/Instructions.txt
-Masters/031/031000/v_04/inbox/121907(b)_shovar12_fb_con_print/121907(b)_shovar12_fb_con Folder/Links/shutterstock_115894966 blue habenleumi2.ai
-Masters/031/031000/v_04/inbox/121907(b)_shovar12_fb_con_print/121907(b)_shovar12_fb_con.idml
-Masters/031/031000/v_04/inbox/121907(b)_shovar12_fb_con_print/121907(b)_shovar12_fb_con.pdf
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/.DS_Store
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121903(d)_maatafa_beeri_MB-wide/121903(d)_maatafa_beeri_MB-wide_con.indd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121903(d)_maatafa_beeri_MB-wide/121903(d)_maatafa_beeri_MB-wide_con_print.pdf
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121903(d)_maatafa_beeri_MB-wide/link/.DS_Store
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121903(d)_maatafa_beeri_MB-wide/link/ASI_ISO_300dpi_s.psd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121903(d)_maatafa_beeri_MB-wide/link/qr_FIBI.png
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121903(d)_maatafa_beeri_MB-wide/link/shutterstock_115894966 blue habenleumi2.ai
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121905(a)_maatafa_burz39/121905(a)_maatafa_burz39_con Folder/121905(a)_maatafa_burz39_con.indd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121905(a)_maatafa_burz39/121905(a)_maatafa_burz39_con Folder/Instructions.txt
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121905(a)_maatafa_burz39/121905(a)_maatafa_burz39_con Folder/Links/ASI_ISO_300dpi_s.psd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121905(a)_maatafa_burz39/121905(a)_maatafa_burz39_con Folder/Links/qr_FIBI.png
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121905(a)_maatafa_burz39/121905(a)_maatafa_burz39_con Folder/Links/shutterstock_115894966 blue habenleumi2.ai
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121905(a)_maatafa_burz39/121905(a)_maatafa_burz39_con.indd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121905(a)_maatafa_burz39/121905(a)_maatafa_burz39_con.pdf
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121906(a)_maatafa_w6_f_con/121906(a)_maatafa_w6_f_con Folder/121906(a)_maatafa_w6_f_con.indd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121906(a)_maatafa_w6_f_con/121906(a)_maatafa_w6_f_con Folder/Instructions.txt
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121906(a)_maatafa_w6_f_con/121906(a)_maatafa_w6_f_con Folder/Links/ASI_ISO_300dpi_s.psd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121906(a)_maatafa_w6_f_con/121906(a)_maatafa_w6_f_con Folder/Links/qr_FIBI.png
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121906(a)_maatafa_w6_f_con/121906(a)_maatafa_w6_f_con Folder/Links/shutterstock_115894966 blue habenleumi2.ai
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121906(a)_maatafa_w6_f_con/121906(a)_maatafa_w6_f_con.indd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121906(a)_maatafa_w6_f_con/121906(a)_maatafa_w6_f_con_print.pdf
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121907(a)_shovar12_fb_con/121907(a)_shovar12_fb_con Folder/121907(a)_shovar12_fb_con.indd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121907(a)_shovar12_fb_con/121907(a)_shovar12_fb_con Folder/Instructions.txt
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121907(a)_shovar12_fb_con/121907(a)_shovar12_fb_con Folder/Links/shutterstock_115894966 blue habenleumi2.ai
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121907(a)_shovar12_fb_con/121907(a)_shovar12_fb_con.indd
-Masters/031/031000/v_04/inbox/bank_habenleumi_beeri/121907(a)_shovar12_fb_con/121907(a)_shovar12_fb_con.pdf
-Masters/031/031000/v_04/inbox/RE_ 031000_EbSf2.pdf.eml
-Masters/031/031000/v_04/inbox/RE_ 031288 - אישור גרפיקה.eml
-Masters/031/031000/v_04/outbox/031000_EbSf.pdf
-Masters/031/031000/v_04/outbox/031000_EbSf2.pdf
-Masters/031/031000/v_04/press/031000_EbSf2.eps
-Masters/031/031000/v_04/press/031000_EbSf_1.eps
-Masters/031/031000/v_04/press/031000_Sf.eps
-Masters/031/031000/v_04/press/031000_Sf.tif
+Masters/001/001001/v_01/001001.indd
+Masters/001/001001/v_01/001001-logo.ai
+Masters/001/001001/v_01/001001-background.psd
+Masters/001/001001/v_01/zevel-1.doc
+Masters/001/001001/v_01/zevel-2.ppt
+Masters/001/001001/v_01/inbox/doc-1.psd
+Masters/001/001001/v_01/outbox/doc-2.tif
+Masters/001/001001/v_01/press/doc-3.pdf
+Masters/001/001001/v_02/001001-v2.indd
+Masters/001/001001/v_02/001001-logo.ai
+Masters/001/001001/v_02/001001-background.psd
+Masters/001/001001/v_02/zevel-1.doc
+Masters/001/001001/v_02/zevel-2.ppt
+Masters/001/001001/v_02/inbox/doc-1.psd
+Masters/001/001001/v_02/outbox/doc-2.tif
+Masters/001/001001/v_02/press/doc-3.eps
+Masters/001/001002/v_01/001002.indd
+Masters/001/001002/v_01/001002-logo.ai
+Masters/001/001002/v_01/001002-background.psd
+Masters/001/001002/v_01/zevel-1.doc
+Masters/001/001002/v_01/zevel-2.ppt
+Masters/001/001002/v_01/inbox/doc-1.psd
+Masters/001/001002/v_01/outbox/doc-2.tif
+Masters/001/001002/v_01/press/doc-3.pdf
+Masters/001/001002/v_01/envelopes/env11/001002-page1.indd
+Masters/001/001002/v_01/envelopes/env11/doc11.psd
+Masters/001/001002/v_01/envelopes/env11/new-001002.ai
+Masters/001/001002/v_01/envelopes/env11/zevel1.txt
+Masters/001/001002/v_01/envelopes/env11/zevel2.db
+Masters/001/001002/v_01/envelopes/env11/inbox/doc-12.xls
+Masters/001/001002/v_01/envelopes/env11/outbox/doc-13.tif
+Masters/001/001002/v_01/envelopes/env11/press/doc-14.pdf
