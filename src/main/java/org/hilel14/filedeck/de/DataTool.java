@@ -89,7 +89,7 @@ public class DataTool {
         String sql = "INSERT INTO fd5_users (user_name) VALUES (?)";
         try (Connection connection = dataSource.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, userName);
+            statement.setString(1, userName.toLowerCase());
             statement.executeUpdate();
         }
     }
