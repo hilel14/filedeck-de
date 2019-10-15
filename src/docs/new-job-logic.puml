@@ -1,0 +1,36 @@
+@startuml
+
+title New job logic
+
+note
+	mandatory parameters: job, user
+	optional parameters: base-job, envelopes
+end note
+
+start
+
+:add record to jobs database table;
+:create job folder and sub-folders;
+
+if (envelopes?) then (yes)
+  :create envelopes folder;
+  :create envolope folder and sub-folser for each envelope;
+endif
+
+if (base-job?) then (yes)
+	:copy files from base-job to job folders;
+	if (envelopes?) then (yes)
+		:copy files from base-job to envelopes folders;
+	endif
+	if (job is different from base-job?) then (yes)
+		:rename files;
+	else
+		end
+	endif
+else
+	end
+endif
+
+stop
+
+@enduml
