@@ -144,9 +144,27 @@ public class JobsManager {
         return base.resolve(paperCode.substring(0, 3)).resolve(paperCode);
     }
 
-    public List<String> getVersions(String paperCode) throws IOException {
+    public List<String> getEnvelopes(String paperCode, String version) throws IOException {
+        List<String> envelopes = new ArrayList<>();
         Path jobFolder = findJobFolder(paperCode, "masters");
+        Path envelpesFolder = jobFolder.resolve(version).resolve("envelopes");
+        if (Files.exists(envelpesFolder)) {
+            try (DirectoryStream<Path> envelopesStream = Files.newDirectoryStream(envelpesFolder)) {
+                for (Path envelpeFolder : envelopesStream) {
+                    if (Files.isDirectory(envelpeFolder)) {
+                        // if envelpeFolder starts with "env"?
+                        envelopes.add(envelpeFolder.getFileName().toString());
+                    }
+                }
+            }
+        }
+        Collections.sort(envelopes);
+        return envelopes;
+    }
+
+    public List<String> getVersions(String paperCode) throws IOException {
         List<String> versions = new ArrayList<>();
+        Path jobFolder = findJobFolder(paperCode, "masters");
         if (Files.exists(jobFolder)) {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(jobFolder)) {
                 for (Path source : stream) {

@@ -1,5 +1,6 @@
 package org.hilel14.filedeck.de.gui;
 
+import java.awt.event.ItemEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -160,6 +161,11 @@ public class CreateJobDialog extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 2);
         contentPanel.add(baseVersionLabel, gridBagConstraints);
 
+        baseVersionComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                baseVersionComboBoxItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -291,8 +297,16 @@ public class CreateJobDialog extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_selectedEnvelopesListMouseClicked
+
+    private void baseVersionComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_baseVersionComboBoxItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            selectedEnvelopesList.setModel(new DefaultListModel());
+            fillSelectedEnvelopesList();
+        }
+    }//GEN-LAST:event_baseVersionComboBoxItemStateChanged
     private void updateControls() {
         baseVersionComboBox.removeAllItems();
+        selectedEnvelopesList.setModel(new DefaultListModel());
         String baseJob = baseJobTextField.getText().trim();
         if (baseJob.matches("\\d{6}")) {
             Path baseJobFolder = jobsManager.findJobFolder(baseJob, "masters");
@@ -303,6 +317,7 @@ public class CreateJobDialog extends javax.swing.JDialog {
                         baseVersionComboBox.addItem(version);
                     }
                     baseVersionComboBox.setSelectedIndex(baseVersionComboBox.getItemCount() - 1);
+                    // don't call fillSelectedEnvelopesList() here, it will be trigerd by baseVersionComboBoxItemStateChanged
                 } catch (IOException ex) {
                     LOGGER.log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(this,
@@ -313,6 +328,24 @@ public class CreateJobDialog extends javax.swing.JDialog {
             }
         }
         enableCreateJobButton();
+    }
+
+    private void fillSelectedEnvelopesList() {
+        String baseJob = baseJobTextField.getText().trim();
+        String version = baseVersionComboBox.getSelectedItem().toString();
+        DefaultListModel model = (DefaultListModel) selectedEnvelopesList.getModel();
+        try {
+            List<String> envelopes = jobsManager.getEnvelopes(baseJob, version);
+            for (String envelope : envelopes) {
+                model.addElement(envelope);
+            }
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+                    "Unable to get envelopes for version " + version + " of job " + baseJob,
+                    "FileDeck operation error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void enableCreateJobButton() {
