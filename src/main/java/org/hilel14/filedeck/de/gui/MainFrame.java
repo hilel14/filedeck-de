@@ -243,6 +243,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         contentScrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        jobsTable.setAutoCreateRowSorter(true);
         jobsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"", "", "", ""},
