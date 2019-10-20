@@ -1,2 +1,2 @@
 # filedeck-de
-FileDeck Desktop Edition
+FileDeck Desktop Edition. Manage studio workflow.

@@ -5,7 +5,6 @@ mkdir -p ~/logs
 
 # set application folder relative to the location of this scripts (remark next 2 lines to set application folder path directly)
 APP_HOME=`dirname $0`
-APP_HOME=`dirname $APP_HOME`
 
 # or set application folder directly
 APP_HOME=/Volumes/RootFolder/FileDeck
